@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forecast</title>
+</head>
+<body>
+    <h2>Forecast for Node: {{ node_label }}, Instance: {{ instance }}</h2>
+    <form action="/forecast" method="post">
+        <label for="forecast_horizon">How many future points to predict?</label>
+        <input type="number" name="forecast_horizon" min="1" required>
+        <input type="hidden" name="node_label" value="{{ node_label }}">
+        <input type="hidden" name="instance" value="{{ instance }}">
+        <button type="submit">Forecast</button>
+    </form>
+
+    {% if forecast %}
+    <h3>Forecast Results:</h3>
+    <table border="1">
+        <tr>
+            <th>Node Label</th>
+            <th>Instance</th>
+            <th>Timestamp</th>
+            <th>Predicted CPU Utilization</th>
+        </tr>
+        {% for row in forecast %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/download" target="_blank">⬇️ Download Forecast as Excel</a>
+{% endif %}
+</body>
+</html>

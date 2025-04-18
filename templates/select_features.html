@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Features</title>
+</head>
+<body>
+    <h2>Select Features for Forecasting</h2>
+
+    {% if message %}
+        <p style="color: red;">{{ message }}</p>
+    {% endif %}
+
+    <form action="/train" method="post">
+        <!-- Required for passing session back -->
+        <input type="hidden" name="session_id" value="{{ session_id }}">
+
+        <label for="node_col">Node Label Column:</label>
+        <select name="node_col" required>
+            {% for col in columns %}
+            <option value="{{ col }}">{{ col }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="instance_col">Instance Column:</label>
+        <select name="instance_col" required>
+            {% for col in columns %}
+            <option value="{{ col }}">{{ col }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="timestamp_col">Timestamp Column:</label>
+        <select name="timestamp_col" required>
+            {% for col in columns %}
+            <option value="{{ col }}">{{ col }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="target_col">Target Column (CPU Utilization):</label>
+        <select name="target_col" required>
+            {% for col in columns %}
+            <option value="{{ col }}">{{ col }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="forecast_horizon">Forecast Horizon (Steps):</label>
+        <input type="number" name="forecast_horizon" min="1" value="5" required><br><br>
+
+        <button type="submit">Train Model</button>
+    </form>
+</body>
+</html>

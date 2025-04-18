@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XGBoost Prediction UI</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 2rem; background: #f8f9fa; }
+        .form-container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px #ccc; width: 400px; margin: auto; }
+        input, select, button { padding: 0.5rem; width: 100%; margin-top: 1rem; }
+        h2 { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Predict CPU Utilization</h2>
+        <form method="post">
+            <label for="node_label">Node Label:</label>
+            <select name="node_label" id="node_label" required>
+                {% for label in node_labels %}
+                    <option value="{{ label }}" {% if node_label == label %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="instance">Instance:</label>
+            <select name="instance" id="instance" required>
+                {% for inst in instances %}
+                    <option value="{{ inst }}" {% if instance == inst %}selected{% endif %}>{{ inst }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="timestamp">Timestamp:</label>
+            <select name="timestamp" id="timestamp" required>
+                {% for ts in timestamps %}
+                    <option value="{{ ts }}" {% if timestamp == ts %}selected{% endif %}>{{ ts }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Predict</button>
+        </form>
+        {% if result is not none %}
+            <h3>Prediction: {{ result }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
